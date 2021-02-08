@@ -50,13 +50,6 @@ createMeme= (req,res)=>{
 
 // count the number of elements
 
-// Meme.collection.countDocuments().then((count)=>{
-//     if(count==0){
-
-//     }
-//     console.log(count)
-// }
-// )
 
 // to get all memes (list 100 memes)
 getMemes = async (req,res)=>{
