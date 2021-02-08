@@ -69,4 +69,20 @@ getMemes = async (req,res)=>{
     }).catch(err=>console.log(err))
 }
 
-module.exports = {createMeme, getMemes}
+getSingleMeme = async (req,res)=>{
+    let id=req.params.id;
+    console.log(id);
+    await Meme.find({_id:id}, (err,meme)=>{
+        if(err){
+            return res.json({success:false,error:err});
+        }
+        if(!meme.length){
+            return res
+                .status(404)
+                .json({success:false, error: 'Item Not Found'})
+        }
+        return res.status(200).json({sucess:true, data:meme})
+    }).catch(err=>console.log(err))
+}
+
+module.exports = {createMeme, getMemes, getSingleMeme}
