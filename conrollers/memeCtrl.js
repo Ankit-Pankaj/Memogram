@@ -69,6 +69,7 @@ getMemes = async (req,res)=>{
     }).catch(err=>console.log(err))
 }
 
+// adding a single meme
 getSingleMeme = async (req,res)=>{
     let id=req.params.id;
     console.log(id);
@@ -85,4 +86,23 @@ getSingleMeme = async (req,res)=>{
     }).catch(err=>console.log(err))
 }
 
-module.exports = {createMeme, getMemes, getSingleMeme}
+updateMeme = async (req,res)=>{
+
+    const updatedBody = req.body;
+    const id= req.params.id;
+    await Meme.find({_id:id}, (err,meme)=>{
+        if(err){
+            return res.json({success:false,error:err});
+        }
+        if(!meme.length){
+            return res
+                .status(404)
+                .json({success:false, error: 'Item Not Found'})
+        }
+        Meme.updateOne({_id:id},{$set:updatedBody})
+        return res.status(200)
+    }).catch(err=>console.log(err))
+
+}
+
+module.exports = {createMeme, getMemes, getSingleMeme, updateMeme}
