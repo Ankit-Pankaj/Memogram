@@ -101,8 +101,22 @@ updateMeme = async (req,res)=>{
         }
         Meme.updateOne({_id:id},{$set:updatedBody})
         return res.status(200)
+                .json({success:true, data:meme});
     }).catch(err=>console.log(err))
 
 }
 
-module.exports = {createMeme, getMemes, getSingleMeme, updateMeme}
+//like a meme
+likeMeme =  async (req,res)=>{
+    // add the items in database here
+    const id = req.params.id;
+    console.log(id);
+    await Meme.findOneAndUpdate({_id :id}, {$inc : {likes : 1}}).exec((err,meme)=>{
+        if(err){return res.json({success:false,error:err});}
+        return res.status(200).json({succes:true, data:meme});
+    })
+    .catch(err=>console.log(err))
+}
+
+
+module.exports = {createMeme, getMemes, getSingleMeme, updateMeme, likeMeme}
