@@ -63,7 +63,7 @@ getMemes = async (req,res)=>{
         }
         // console.log(memes);
         return res.status(200).json({succes:true, data:memes})
-    }).sort({_id:-1}).limit(5).catch(err=>console.log(err))
+    }).sort({_id:-1}).limit(100).catch(err=>console.log(err))
 }
 
 // adding a single meme
