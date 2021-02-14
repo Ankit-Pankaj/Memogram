@@ -9,7 +9,7 @@ const memeRouter= require("./routes/meme-router");
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
 app.use(bodyParser.json())
-
+require('dotenv').config()
 // running on port 8081
 //--------------------swagger---------------
 // swagger--------------------------------
