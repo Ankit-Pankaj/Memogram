@@ -1,7 +1,9 @@
 const mongoose = require('mongoose')
+const normalize = require ('normalize-mongoose');
+
 const Schema = mongoose.Schema
 
-const Meme = new Schema(
+var Meme = new Schema(
     {
         name: { type: String, required: true },
         url: {type:String ,require:true},
@@ -11,5 +13,6 @@ const Meme = new Schema(
     },
     { timestamps: true },
 )
+Meme.plugin(normalize);
 
 module.exports = mongoose.model('meme', Meme)
