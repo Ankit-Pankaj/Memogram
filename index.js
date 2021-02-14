@@ -44,7 +44,7 @@ app.use("/memes", memeRouter);
 
 
 
-app.listen(8081,(err)=>{
+app.listen(process.env.PORT|8081,(err)=>{
     if(!err){console.log("Backend server started at port 8081");}
     else{
         console.log(err);

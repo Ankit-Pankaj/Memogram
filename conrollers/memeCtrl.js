@@ -1,5 +1,5 @@
 const Meme = require('../models/meme-model')
-
+const axios = require ('axios');
 // function to check a valid image url
 async function checkurl(url){
     try {
@@ -14,7 +14,7 @@ async function checkurl(url){
         console.log(err);
       }
     }
-
+// checkurl("https://www.google.com/");
 // to post the new meme
 createMeme= (req,res)=>{
     // add the items in database here
