@@ -1,20 +1,37 @@
 const Meme = require('../models/meme-model')
 const axios = require ('axios');
 // function to check a valid image url
-async function checkurl(url){
+
+const checkurl= async (url)=>{
     try {
-        const response =await  axios.get(url);
-        console.log(response.headers['content-type'])
-        if(response.status === 200) {
-          console.log("yeah url is working");
+      const response =await  axios.get(url);
+      const content=response.headers['content-type'];
+  
+      if(content==="image/jpeg"||content==="image/gif"||content==="image/png"){
+        //   console.log("url is valid");
           return true;
-        }
-      }
-      catch(err){
-        console.log(err);
+      } 
+      else{
+          return false;
       }
     }
-// checkurl("https://www.google.com/");
+    catch(error) {
+    //   
+        // return error
+        console.log("url is not valid at all");
+        // return error;
+
+    }    
+  }
+
+// checkurl("https://i.pinimg.com/originals/b6/52/4f/b6524f497b190e0fc67e7176d375fe07.gif")
+// .then((r)=>{
+//     console.log(r);
+// })
+// .catch(err=>{
+
+// })
+
 // to post the new meme
 createMeme= (req,res)=>{
     // add the items in database here
@@ -31,16 +48,40 @@ createMeme= (req,res)=>{
     if(!meme){
         return res.status(400).json({ success: false, error: err })
     }
-
-    meme.save().then(() => {
-        return res.status(200).json({succes:true, data:meme})
-    })
-    .catch(error => {
-        return res.status(500).json({
-            error,
-            message: 'meme not created',
+    // ---------------------------------------------
+   console.log(body.url);
+    checkurl(body.url) // validating the url 
+    .then((response)=>{
+        console.log(response);
+        if(response===true){
+                meme.save().then(() => {
+                return res.status(200).json({succes:true, data:meme})
+            })
+            .catch(error => {
+                return res.status(500).json({
+                    error,
+                    message: 'meme not created',
+                })
+            }) 
+    }
+    else if(response===false){
+        res.status(404).json({
+            message: 'URL do not contains image',
         })
-    }) 
+    }
+    else{
+        res.status(500).json({
+            message: 'URL is invalid',
+        })
+    }
+   
+})
+.catch(error => {
+    console.log("url is invalid")
+//   console.log(error)
+  
+})
+
 }
 
 
